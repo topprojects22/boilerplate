@@ -1,0 +1,34 @@
+//
+//  UserDetailsView.swift
+//  boilerplate
+//
+//  Created by ark on 02.05.2025.
+//
+
+import SwiftUI
+
+struct UserDetailsView: View {
+    @ObservedObject var viewModel: UserDetailsViewModel
+    
+    var body: some View {
+        VStack {
+            Text(viewModel.user.name)
+                .font(.largeTitle)
+            
+            Button(action: {
+                viewModel.toggleFavorite()
+            }) {
+                HStack {
+                    Image(systemName: viewModel.user.isFavorite ? "star.fill" : "star")
+                    Text(viewModel.user.isFavorite ? "Удалить из избранного" : "Добавить в избранное")
+                }
+                .foregroundColor(.yellow)
+            }
+        }
+        .padding()
+        .navigationTitle("Детали")
+        .alert(item: $viewModel.error) { error in
+            Alert(title: Text("Ошибка"), message: Text(error.localizedDescription))
+        }
+    }
+}
