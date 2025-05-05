@@ -9,23 +9,86 @@ import SwiftUI
 
 @main
 struct MyAppApp: App {
-    // Используем DIContainer для внедрения зависимостей
-    private let userRepository = DIContainer.shared.makeUserRepository()
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @StateObject private var appState = AppState()
     
-    private let navigationCoordinator = NavigationCoordinator()
-
     var body: some Scene {
         WindowGroup {
-            // Создаем ViewModel с внедренными зависимостями
-            let fetchUsersUseCase = FetchUsersUseCase(repository: userRepository)
-            let viewModel = UserListViewModel(
-                fetchUsersUseCase: fetchUsersUseCase,
-                navigationCoordinator: navigationCoordinator
-            )
-            
-            // Передаем ViewModel в начальный экран
-            UserListView(viewModel: viewModel)
-                .environmentObject(navigationCoordinator)
+            RootView()
+                .environmentObject(appState)
+                .environment(\.diContainer, DIContainer.shared)
+                .onAppear {
+                    NotificationManager.shared.requestAuthorization { granted in
+                        print("Notification permission granted: \(granted)")
+                        if granted {
+                            DispatchQueue.main.async {
+                                UIApplication.shared.registerForRemoteNotifications()
+                            }
+                        }
+                    }
+                }
+        }
+    }
+}
+
+class AppState: ObservableObject {
+    enum Screen {
+        case splash, auth, paywall, mainTab
+    }
+    @Published var currentScreen: Screen = .splash
+}
+
+struct RootView: View {
+    @EnvironmentObject var appState: AppState
+    var body: some View {
+        ZStack {
+            switch appState.currentScreen {
+            case .splash:
+                SplashView()
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            appState.currentScreen = .auth
+                        }
+                    }
+            case .auth:
+                AuthorizationView()
+            case .paywall:
+                PaymentWallView()
+            case .mainTab:
+                MainTabView()
+            }
+        }
+    }
+}
+
+struct MainTabView: View {
+    @State private var selectedTab = 0
+    var body: some View {
+        TabView(selection: $selectedTab) {
+            HomeView()
+                .tabItem {
+                    Image(systemName: "house.fill")
+                    Text("Home")
+                }
+                .tag(0)
+            PaymentsView()
+                .tabItem {
+                    Image(systemName: "arrow.left.arrow.right")
+                    Text("Payments")
+                }
+                .tag(1)
+            AnalyticsView()
+                .tabItem {
+                    Image(systemName: "chart.bar.xaxis")
+                    Text("Analytics")
+                }
+                .tag(2)
+            ProfileView()
+                .tabItem {
+                    Image(systemName: "person.crop.circle")
+                    Text("Profile")
+                }
+                .tag(3)
         }
     }
 }

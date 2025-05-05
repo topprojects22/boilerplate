@@ -21,6 +21,11 @@ class UserDetailsViewModel: ObservableObject {
         self.toggleFavoriteUseCase = toggleFavoriteUseCase
     }
     
+    static func make(user: User, diContainer: DIContainerProtocol) -> UserDetailsViewModel {
+        let useCase = ToggleFavoriteUserUseCase(repository: diContainer.makeUserRepository())
+        return UserDetailsViewModel(user: user, toggleFavoriteUseCase: useCase)
+    }
+    
     func toggleFavorite() {
         Task {
             isLoading = true

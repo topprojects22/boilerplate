@@ -6,9 +6,16 @@
 //
 
 import CoreData
+import SwiftUI
 
-class DIContainer {
-    static let shared = DIContainer()
+protocol DIContainerProtocol {
+    func makeUserRepository() -> UserRepository
+    func makeAuthUseCase() -> AuthUseCase
+    // Add more as needed
+}
+
+class DIContainer: DIContainerProtocol {
+    static let shared: DIContainerProtocol = DIContainer()
     private let persistentContainer: NSPersistentContainer
     
     private init() {
@@ -24,5 +31,38 @@ class DIContainer {
         let networkService = UserNetworkService()
         let localStore = UserLocalStore(container: persistentContainer)
         return UserRepositoryImpl(networkService: networkService, localStore: localStore)
+    }
+    
+    func makeAuthUseCase() -> AuthUseCase {
+        AuthUseCase(authService: RealAuthenticationService())
+    }
+}
+
+// MARK: - SwiftUI EnvironmentKey for DI
+struct DIContainerKey: EnvironmentKey {
+    static let defaultValue: DIContainerProtocol = DIContainer.shared
+}
+
+extension EnvironmentValues {
+    var diContainer: DIContainerProtocol {
+        get { self[DIContainerKey.self] }
+        set { self[DIContainerKey.self] = newValue }
+    }
+}
+
+// MARK: - Mock for Previews/Tests
+class MockDIContainer: DIContainerProtocol {
+    func makeUserRepository() -> UserRepository {
+        // Return a mock or stub implementation
+        return UserRepositoryMock()
+    }
+    func makeAuthUseCase() -> AuthUseCase {
+        AuthUseCase(authService: MockAuthenticationService())
+    }
+}
+
+class UserRepositoryMock: UserRepository {
+    func fetchUsers() async throws -> [User] {
+        return [User(id: 1, name: "Mock User", isFavorite: false)]
     }
 }

@@ -8,7 +8,13 @@
 import SwiftUI
 
 struct UserDetailsView: View {
-    @ObservedObject var viewModel: UserDetailsViewModel
+    @Environment(\.diContainer) private var diContainer
+    @StateObject private var viewModel: UserDetailsViewModel
+    
+    init(user: User) {
+        let toggleFavoriteUseCase = ToggleFavoriteUserUseCase(repository: DIContainer.shared.makeUserRepository())
+        _viewModel = StateObject(wrappedValue: UserDetailsViewModel(user: user, toggleFavoriteUseCase: toggleFavoriteUseCase))
+    }
     
     var body: some View {
         VStack {

@@ -10,8 +10,18 @@ import Combine
 
 /// Список пользователей
 struct UserListView: View {
-    @ObservedObject var viewModel: UserListViewModel
+    @Environment(\.diContainer) private var diContainer
     @EnvironmentObject private var navigationCoordinator: NavigationCoordinator
+    @StateObject private var viewModel: UserListViewModel
+    
+    init() {
+        let fetchUsersUseCase = FetchUsersUseCase(repository: DIContainer.shared.makeUserRepository())
+        let navigationCoordinator = NavigationCoordinator()
+        _viewModel = StateObject(wrappedValue: UserListViewModel(
+            fetchUsersUseCase: fetchUsersUseCase,
+            navigationCoordinator: navigationCoordinator
+        ))
+    }
     
     var body: some View {
         NavigationStack(path: $navigationCoordinator.path) {
