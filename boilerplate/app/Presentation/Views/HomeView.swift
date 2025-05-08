@@ -3,105 +3,311 @@ import SwiftUI
 struct HomeView: View {
     @Environment(\.diContainer) private var diContainer
     @StateObject private var viewModel = HomeViewModel.make(diContainer: diContainer)
-
+    @State private var selectedTab = 0
+    @State private var isRefreshing = false
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
-                // Greeting and profile
-                HStack {
-                    Image(systemName: "person.crop.circle")
-                        .resizable()
-                        .frame(width: 48, height: 48)
-                        .clipShape(Circle())
-                    VStack(alignment: .leading) {
-                        Text("Hello 👋,")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                        Text(viewModel.userName)
-                            .font(.headline)
+                // Enhanced Header
+                VStack(spacing: 16) {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Welcome back,")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                            Text(viewModel.userName)
+                                .font(.title2)
+                                .fontWeight(.bold)
+                        }
+                        Spacer()
+                        HStack(spacing: 16) {
+                            Button(action: {}) {
+                                Image(systemName: "bell")
+                                    .font(.title3)
+                                    .foregroundColor(.primary)
+                                    .overlay(
+                                        Circle()
+                                            .fill(Color.red)
+                                            .frame(width: 8, height: 8)
+                                            .offset(x: 4, y: -4)
+                                    )
+                            }
+                            Button(action: {}) {
+                                Image(systemName: "gearshape")
+                                    .font(.title3)
+                                    .foregroundColor(.primary)
+                            }
+                        }
                     }
-                    Spacer()
-                    Button(action: {}) {
-                        Image(systemName: "bell")
-                            .font(.title2)
-                            .foregroundColor(.accentColor)
-                    }
-                }
-                .padding(.horizontal)
-                // Notification test button
-                Button(action: {
-                    NotificationManager.shared.scheduleNotification(
-                        title: "Test Notification",
-                        body: "This is a test notification from your app.",
-                        inSeconds: 5
-                    )
-                }) {
-                    Label("Send Test Notification", systemImage: "bell.badge")
-                        .padding()
-                        .background(RoundedRectangle(cornerRadius: 12).fill(Color.accentColor))
-                        .foregroundColor(.white)
-                }
-                // Performance Graph (placeholder)
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Performance")
-                        .font(.headline)
-                    RoundedRectangle(cornerRadius: 16)
-                        .fill(Color.white)
-                        .frame(height: 160)
-                        .overlay(Text("[Graph]").foregroundColor(.gray))
-                }
-                .padding(.horizontal)
-                // Total Balance
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Total Balance")
-                        .font(.headline)
-                    HStack(alignment: .firstTextBaseline, spacing: 8) {
-                        Text("$\(String(format: "%.2f", viewModel.balance))")
-                            .font(.largeTitle).fontWeight(.bold)
-                        Text("+2.45%")
-                            .font(.subheadline)
-                            .foregroundColor(.green)
+                    
+                    // Quick Stats
+                    HStack(spacing: 16) {
+                        StatCard(title: "Balance", value: "$\(String(format: "%.2f", viewModel.balance))", icon: "dollarsign.circle.fill", color: .blue)
+                        StatCard(title: "Growth", value: "+2.45%", icon: "chart.line.uptrend.xyaxis", color: .green)
                     }
                 }
                 .padding()
-                .background(RoundedRectangle(cornerRadius: 24).fill(Color.white).shadow(radius: 4))
+                .background(Color(.systemBackground))
+                .cornerRadius(20)
+                .shadow(radius: 5)
                 .padding(.horizontal)
-                // Latest News
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Latest News")
-                        .font(.headline)
+                
+                // Quick Actions
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 16) {
+                        QuickActionButton(title: "Send", icon: "arrow.up.circle.fill", color: .blue)
+                        QuickActionButton(title: "Receive", icon: "arrow.down.circle.fill", color: .green)
+                        QuickActionButton(title: "Invest", icon: "chart.pie.fill", color: .purple)
+                        QuickActionButton(title: "Exchange", icon: "arrow.left.arrow.right.circle.fill", color: .orange)
+                    }
+                    .padding(.horizontal)
+                }
+                
+                // Performance Section
+                VStack(alignment: .leading, spacing: 16) {
+                    HStack {
+                        Text("Performance")
+                            .font(.title3)
+                            .fontWeight(.bold)
+                        Spacer()
+                        Picker("Time Range", selection: $selectedTab) {
+                            Text("1D").tag(0)
+                            Text("1W").tag(1)
+                            Text("1M").tag(2)
+                            Text("1Y").tag(3)
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                        .frame(width: 200)
+                    }
+                    
+                    // Performance Graph
                     VStack(spacing: 8) {
-                        ForEach(viewModel.news) { item in
-                            HStack {
-                                Image(systemName: "doc.text")
-                                    .foregroundColor(.accentColor)
-                                Text(item.title)
-                                    .font(.subheadline)
-                                Spacer()
-                            }
-                            .padding(8)
-                            .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray5)))
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(Color.white)
+                            .frame(height: 200)
+                            .overlay(
+                                VStack {
+                                    Text("$\(String(format: "%.2f", viewModel.balance))")
+                                        .font(.title2)
+                                        .fontWeight(.bold)
+                                    Text("Total Portfolio Value")
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                }
+                            )
+                            .shadow(radius: 2)
+                        
+                        // Performance Metrics
+                        HStack(spacing: 20) {
+                            MetricCard(title: "Daily Change", value: "+$123.45", color: .green)
+                            MetricCard(title: "Weekly Change", value: "+$456.78", color: .green)
+                            MetricCard(title: "Monthly Change", value: "-$89.12", color: .red)
                         }
                     }
                 }
                 .padding()
-                .background(RoundedRectangle(cornerRadius: 24).fill(Color.white).shadow(radius: 4))
+                .background(Color(.systemBackground))
+                .cornerRadius(20)
+                .shadow(radius: 5)
                 .padding(.horizontal)
-                if viewModel.isLoading {
-                    ProgressView()
-                        .padding()
+                
+                // Latest News Section
+                VStack(alignment: .leading, spacing: 16) {
+                    HStack {
+                        Text("Latest News")
+                            .font(.title3)
+                            .fontWeight(.bold)
+                        Spacer()
+                        Button("See All") {
+                            // Action
+                        }
+                        .foregroundColor(.accentColor)
+                    }
+                    
+                    VStack(spacing: 12) {
+                        ForEach(viewModel.news) { item in
+                            NewsCard(item: item)
+                        }
+                    }
                 }
-                if let error = viewModel.error {
-                    Text(error)
-                        .foregroundColor(.red)
-                        .font(.footnote)
+                .padding()
+                .background(Color(.systemBackground))
+                .cornerRadius(20)
+                .shadow(radius: 5)
+                .padding(.horizontal)
+                
+                // Recent Activity
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("Recent Activity")
+                        .font(.title3)
+                        .fontWeight(.bold)
+                    
+                    VStack(spacing: 12) {
+                        ForEach(0..<3) { _ in
+                            ActivityRow()
+                        }
+                    }
                 }
+                .padding()
+                .background(Color(.systemBackground))
+                .cornerRadius(20)
+                .shadow(radius: 5)
+                .padding(.horizontal)
             }
             .padding(.vertical)
         }
         .background(Color(.systemGray6).edgesIgnoringSafeArea(.all))
+        .refreshable {
+            isRefreshing = true
+            await viewModel.loadData()
+            isRefreshing = false
+        }
         .onAppear {
             viewModel.loadData()
         }
+    }
+}
+
+// MARK: - Supporting Views
+struct StatCard: View {
+    let title: String
+    let value: String
+    let icon: String
+    let color: Color
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Image(systemName: icon)
+                    .foregroundColor(color)
+                Text(title)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
+            Text(value)
+                .font(.title3)
+                .fontWeight(.bold)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding()
+        .background(Color(.systemGray6))
+        .cornerRadius(12)
+    }
+}
+
+struct QuickActionButton: View {
+    let title: String
+    let icon: String
+    let color: Color
+    
+    var body: some View {
+        VStack(spacing: 8) {
+            Image(systemName: icon)
+                .font(.title2)
+                .foregroundColor(color)
+            Text(title)
+                .font(.caption)
+                .foregroundColor(.primary)
+        }
+        .frame(width: 80, height: 80)
+        .background(Color(.systemBackground))
+        .cornerRadius(16)
+        .shadow(radius: 2)
+    }
+}
+
+struct MetricCard: View {
+    let title: String
+    let value: String
+    let color: Color
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(title)
+                .font(.caption)
+                .foregroundColor(.secondary)
+            Text(value)
+                .font(.subheadline)
+                .fontWeight(.semibold)
+                .foregroundColor(color)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+struct NewsCard: View {
+    let item: NewsItem
+    
+    var body: some View {
+        HStack(spacing: 12) {
+            Image(systemName: "doc.text.fill")
+                .font(.title2)
+                .foregroundColor(.accentColor)
+                .frame(width: 40, height: 40)
+                .background(Color.accentColor.opacity(0.1))
+                .cornerRadius(8)
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(item.title)
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                Text("2 hours ago")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            
+            Spacer()
+            
+            Image(systemName: "chevron.right")
+                .foregroundColor(.secondary)
+        }
+        .padding()
+        .background(Color(.systemGray6))
+        .cornerRadius(12)
+    }
+}
+
+struct ActivityRow: View {
+    var body: some View {
+        HStack(spacing: 12) {
+            Circle()
+                .fill(Color.blue.opacity(0.1))
+                .frame(width: 40, height: 40)
+                .overlay(
+                    Image(systemName: "arrow.up.right")
+                        .foregroundColor(.blue)
+                )
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Payment Sent")
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                Text("To John Doe")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            
+            Spacer()
+            
+            VStack(alignment: .trailing, spacing: 4) {
+                Text("-$50.00")
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                Text("2 hours ago")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+        }
+        .padding()
+        .background(Color(.systemGray6))
+        .cornerRadius(12)
+    }
+}
+
+// MARK: - Preview
+struct HomeView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeView()
     }
 } 
