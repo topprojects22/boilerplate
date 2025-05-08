@@ -22,7 +22,8 @@ class AuthorizationViewModel: ObservableObject {
         error = nil
         Task {
             do {
-                try await authUseCase.login(email: email, password: password)
+                print("1")
+                var response = try await authUseCase.login(email: email, password: password)
                 await MainActor.run {
                     SessionManager.shared.saveSession(token: response.token, user: response.user)
                     // Navigate or update UI

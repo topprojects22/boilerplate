@@ -2,9 +2,15 @@ import SwiftUI
 
 struct HomeView: View {
     @Environment(\.diContainer) private var diContainer
-    @StateObject private var viewModel = HomeViewModel.make(diContainer: diContainer)
+    @StateObject private var viewModel: HomeViewModel
     @State private var selectedTab = 0
     @State private var isRefreshing = false
+    
+    init() {
+        _viewModel = StateObject(
+            wrappedValue: HomeViewModel.make(diContainer: DIContainer.shared)
+        )
+    }
     
     var body: some View {
         ScrollView {
@@ -100,9 +106,9 @@ struct HomeView: View {
                         
                         // Performance Metrics
                         HStack(spacing: 20) {
-                            MetricCard(title: "Daily Change", value: "+$123.45", color: .green)
-                            MetricCard(title: "Weekly Change", value: "+$456.78", color: .green)
-                            MetricCard(title: "Monthly Change", value: "-$89.12", color: .red)
+                            MetricCard(title: "Daily Change", value: "+$123.45", change: "1", isPositive: true)
+                            MetricCard(title: "Weekly Change", value: "+$456.78", change: "1", isPositive: true)
+                            MetricCard(title: "Monthly Change", value: "-$89.12", change: "1", isPositive: true)
                         }
                     }
                 }
@@ -170,31 +176,31 @@ struct HomeView: View {
 }
 
 // MARK: - Supporting Views
-struct StatCard: View {
-    let title: String
-    let value: String
-    let icon: String
-    let color: Color
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Image(systemName: icon)
-                    .foregroundColor(color)
-                Text(title)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-            }
-            Text(value)
-                .font(.title3)
-                .fontWeight(.bold)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .background(Color(.systemGray6))
-        .cornerRadius(12)
-    }
-}
+//struct StatCard: View {
+//    let title: String
+//    let value: String
+//    let icon: String
+//    let color: Color
+//    
+//    var body: some View {
+//        VStack(alignment: .leading, spacing: 8) {
+//            HStack {
+//                Image(systemName: icon)
+//                    .foregroundColor(color)
+//                Text(title)
+//                    .font(.subheadline)
+//                    .foregroundColor(.secondary)
+//            }
+//            Text(value)
+//                .font(.title3)
+//                .fontWeight(.bold)
+//        }
+//        .frame(maxWidth: .infinity, alignment: .leading)
+//        .padding()
+//        .background(Color(.systemGray6))
+//        .cornerRadius(12)
+//    }
+//}
 
 struct QuickActionButton: View {
     let title: String
@@ -214,25 +220,6 @@ struct QuickActionButton: View {
         .background(Color(.systemBackground))
         .cornerRadius(16)
         .shadow(radius: 2)
-    }
-}
-
-struct MetricCard: View {
-    let title: String
-    let value: String
-    let color: Color
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(title)
-                .font(.caption)
-                .foregroundColor(.secondary)
-            Text(value)
-                .font(.subheadline)
-                .fontWeight(.semibold)
-                .foregroundColor(color)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 

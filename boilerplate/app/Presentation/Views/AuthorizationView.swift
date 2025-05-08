@@ -2,8 +2,13 @@ import SwiftUI
 
 struct AuthorizationView: View {
     @Environment(\.diContainer) private var diContainer
-    @StateObject private var viewModel = AuthorizationViewModel.make(diContainer: diContainer)
+    @StateObject private var viewModel: AuthorizationViewModel
     @EnvironmentObject var appState: AppState
+    
+    init() {
+        _viewModel = StateObject(wrappedValue: AuthorizationViewModel.make(diContainer: DIContainer.shared))
+    }
+    
     
     var body: some View {
         ZStack {

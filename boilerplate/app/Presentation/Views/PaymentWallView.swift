@@ -14,54 +14,54 @@ struct PaymentWallView: View {
                 VStack(spacing: 32) {
                     Text("Upgrade to Premium")
                         .font(.title).fontWeight(.bold)
-                    VStack(spacing: 16) {
-                        if let product = viewModel.products.first {
-                            Text(product.displayName)
-                                .font(.title2).fontWeight(.semibold)
-                            Text(product.description)
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                            VStack(spacing: 4) {
-                                Text(product.displayPrice)
-                                    .font(.system(size: 36, weight: .bold, design: .rounded))
-                                    .foregroundColor(.accentColor)
-                                if let offer = product.subscription?.introductoryOffer {
-                                    HStack(spacing: 6) {
-                                        Image(systemName: "tag.fill")
-                                            .foregroundColor(.green)
-                                        Text("Special offer: \(offer.localizedDescription)")
-                                            .font(.footnote)
-                                            .foregroundColor(.green)
-                                    }
-                                }
-                            }
-                            if let period = product.subscription?.subscriptionPeriod {
-                                Text("Billed every \(period.value) \(period.unit.localizedString())")
-                                    .font(.footnote)
-                                    .foregroundColor(.secondary)
-                            }
-                        } else {
-                            ProgressView()
-                            Text("Loading subscription info...")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                        }
-                        VStack(alignment: .leading, spacing: 12) {
-                            Text("Unlock all features:")
-                                .font(.headline)
-                            FeatureRow(icon: "checkmark.seal", text: "Unlimited transactions")
-                            FeatureRow(icon: "star.fill", text: "Priority support")
-                            FeatureRow(icon: "chart.bar", text: "Advanced analytics")
-                            FeatureRow(icon: "lock.shield", text: "Secure payment processing")
-                        }
-                        .padding(.leading)
-                    }
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 24)
-                            .fill(Color.white)
-                            .shadow(color: Color.black.opacity(0.07), radius: 12, x: 0, y: 4)
-                    )
+//                    VStack(spacing: 16) {
+//                        if let product = viewModel.products.first {
+//                            Text(product.displayName)
+//                                .font(.title2).fontWeight(.semibold)
+//                            Text(product.description)
+//                                .font(.subheadline)
+//                                .foregroundColor(.secondary)
+//                            VStack(spacing: 4) {
+//                                Text(product.displayPrice)
+//                                    .font(.system(size: 36, weight: .bold, design: .rounded))
+//                                    .foregroundColor(.accentColor)
+//                                if let offer = product.subscription?.introductoryOffer {
+//                                    HStack(spacing: 6) {
+//                                        Image(systemName: "tag.fill")
+//                                            .foregroundColor(.green)
+//                                        Text("Special offer: \(offer.localizedDescription)")
+//                                            .font(.footnote)
+//                                            .foregroundColor(.green)
+//                                    }
+//                                }
+//                            }
+//                            if let period = product.subscription?.subscriptionPeriod {
+//                                Text("Billed every \(period.value) \(period.unit.localizedString())")
+//                                    .font(.footnote)
+//                                    .foregroundColor(.secondary)
+//                            }
+//                        } else {
+//                            ProgressView()
+//                            Text("Loading subscription info...")
+//                                .font(.subheadline)
+//                                .foregroundColor(.gray)
+//                        }
+//                        VStack(alignment: .leading, spacing: 12) {
+//                            Text("Unlock all features:")
+//                                .font(.headline)
+//                            FeatureRow(icon: "checkmark.seal", text: "Unlimited transactions")
+//                            FeatureRow(icon: "star.fill", text: "Priority support")
+//                            FeatureRow(icon: "chart.bar", text: "Advanced analytics")
+//                            FeatureRow(icon: "lock.shield", text: "Secure payment processing")
+//                        }
+//                        .padding(.leading)
+//                    }
+//                    .padding()
+//                    .background(
+//                        RoundedRectangle(cornerRadius: 24)
+//                            .fill(Color.white)
+//                            .shadow(color: Color.black.opacity(0.07), radius: 12, x: 0, y: 4)
+//                    )
                     // Testimonials Section
                     VStack(alignment: .leading, spacing: 12) {
                         Text("What our users say")

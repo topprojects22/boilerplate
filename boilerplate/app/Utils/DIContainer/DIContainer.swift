@@ -34,7 +34,7 @@ class DIContainer: DIContainerProtocol {
     }
     
     func makeAuthUseCase() -> AuthUseCase {
-        AuthUseCase(authService: RealAuthenticationService())
+        AuthUseCase(authService: AuthService())
     }
 }
 
@@ -51,18 +51,9 @@ extension EnvironmentValues {
 }
 
 // MARK: - Mock for Previews/Tests
-class MockDIContainer: DIContainerProtocol {
-    func makeUserRepository() -> UserRepository {
-        // Return a mock or stub implementation
-        return UserRepositoryMock()
-    }
-    func makeAuthUseCase() -> AuthUseCase {
-        AuthUseCase(authService: MockAuthenticationService())
-    }
-}
 
 class UserRepositoryMock: UserRepository {
     func fetchUsers() async throws -> [User] {
-        return [User(id: 1, name: "Mock User", isFavorite: false)]
+        return [User(id: 1, name: "Mock User", email: "mock@example.com", isFavorite: false)]
     }
 }

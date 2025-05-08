@@ -9,5 +9,6 @@
 struct User: Identifiable, Equatable, Codable, Hashable {
     let id: Int
     let name: String
+    let email: String
     var isFavorite: Bool = false
 }

@@ -47,7 +47,7 @@ struct RootView: View {
                 SplashView()
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                            appState.currentScreen = .auth
+                            appState.currentScreen = .paywall
                         }
                     }
             case .auth:

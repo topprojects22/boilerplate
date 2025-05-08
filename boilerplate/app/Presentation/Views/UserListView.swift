@@ -170,7 +170,7 @@ struct UserRow: View {
             
             // Status Indicator
             Circle()
-                .fill(user.isActive ? Color.green : Color.gray)
+                .fill(true ? Color.green : Color.gray)
                 .frame(width: 12, height: 12)
         }
         .padding()

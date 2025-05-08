@@ -1,7 +1,10 @@
+import Foundation
+import StoreKit
+
 class SessionManager: ObservableObject {
     static let shared = SessionManager()
-    @Published var token: String?
-    @Published var user: UserSession?
+    @Published var token: String? = nil
+    @Published var user: UserSession? = nil
     
     private init() {}
     

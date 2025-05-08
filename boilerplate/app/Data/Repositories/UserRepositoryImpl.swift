@@ -25,12 +25,12 @@ class UserRepositoryImpl: UserRepository {
         // Слияние данных: сохраняем избранный статус
         return networkUsers.map { user in
             let isFavorite = localUsers.first(where: { $0.id == user.id })?.isFavorite ?? false
-            return User(id: user.id, name: user.name, isFavorite: isFavorite)
+            return User(id: user.id, name: user.name, email: user.email, isFavorite: isFavorite)
         }
     }
     
     func toggleFavorite(user: User) async throws -> User {
-        let updatedUser = User(id: user.id, name: user.name, isFavorite: !user.isFavorite)
+        let updatedUser = User(id: user.id, name: user.name, email: user.email, isFavorite: !user.isFavorite)
         localStore.save(user: updatedUser)
         return updatedUser
     }

@@ -27,7 +27,7 @@ extension Bundle {
 
     private class PrivateBundle: Bundle {
         override func localizedString(forKey key: String, value: String?, table tableName: String?) -> String {
-            let bundle = objc_getAssociatedObject(self, &bundleKey) as? Bundle
+            let bundle = objc_getAssociatedObject(self, &Bundle.bundleKey) as? Bundle
             return bundle?.localizedString(forKey: key, value: value, table: tableName) ?? super.localizedString(forKey: key, value: value, table: tableName)
         }
     }

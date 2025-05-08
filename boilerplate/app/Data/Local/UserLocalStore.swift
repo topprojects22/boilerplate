@@ -38,7 +38,7 @@ class UserLocalStore {
         do {
             let entities = try container.viewContext.fetch(request)
             return entities.map { 
-                User(id: Int($0.id), name: $0.name ?? "Unknown", isFavorite: $0.isFavorite) 
+                User(id: Int($0.id), name: $0.name ?? "Unknown", email: "email@example.com", isFavorite: $0.isFavorite) 
             }
         } catch {
             return []
