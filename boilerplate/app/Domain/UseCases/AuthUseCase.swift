@@ -1,17 +1,17 @@
 import Foundation
 
 class AuthUseCase {
-    private let authService: AuthService
+    private let authRepository: AuthRepository
     
-    init(authService: AuthService) {
-        self.authService = authService
+    init(authRepository: AuthRepository) {
+        self.authRepository = authRepository
     }
     
     func login(email: String, password: String) async throws -> AuthResponse {
-        try await authService.login(email: email, password: password)
+        try await authRepository.login(email: email, password: password)
     }
     
     func register(email: String, password: String) async throws -> AuthResponse {
-        try await authService.register(email: email, password: password)
+        try await authRepository.register(email: email, password: password)
     }
 }

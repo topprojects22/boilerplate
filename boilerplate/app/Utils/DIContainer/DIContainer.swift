@@ -34,7 +34,7 @@ class DIContainer: DIContainerProtocol {
     }
     
     func makeAuthUseCase() -> AuthUseCase {
-        AuthUseCase(authService: AuthService())
+        AuthUseCase(authRepository: AuthRepositoryImpl(authService: AuthService()))
     }
 }
 
