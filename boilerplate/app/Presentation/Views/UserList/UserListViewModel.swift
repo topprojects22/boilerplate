@@ -11,21 +11,31 @@ import Foundation
 
 @MainActor
 class UserListViewModel: ObservableObject {
+    
+    /* UserList STATE */
     @Published var users: [User] = []
     @Published var isLoading = false
     @Published var error: IdentifiableError?
+    /* !UserList STATE */
     
-    private let fetchUsersUseCase: FetchUsersUseCase
+    /* UserList DI */
+    private let userRepository: UserRepository
     private let navigationCoordinator: NavigationCoordinator
     
     init(
-        fetchUsersUseCase: FetchUsersUseCase,
+        userRepository: UserRepository,
         navigationCoordinator: NavigationCoordinator
     ) {
-        self.fetchUsersUseCase = fetchUsersUseCase
+        self.userRepository = userRepository
         self.navigationCoordinator = navigationCoordinator
     }
     
+    static func make(navigationCoordinator: NavigationCoordinator, diContainer: DIContainerProtocol) -> UserListViewModel {
+        UserListViewModel(userRepository: diContainer.makeUserRepository(), navigationCoordinator: navigationCoordinator)
+    }
+    /* !UserList DI */
+    
+    /* UserList ACTIONS */
     /// Загрузить пользователей
     func loadUsers() {
         Task {
@@ -33,7 +43,7 @@ class UserListViewModel: ObservableObject {
             error = nil
             
             do {
-                users = try await fetchUsersUseCase.execute()
+                users = try await userRepository.fetchUsers()
             } catch {
                 self.error = IdentifiableError(error: error)
             }
@@ -41,4 +51,5 @@ class UserListViewModel: ObservableObject {
             isLoading = false
         }
     }
+    /* !UserList ACTIONS */
 }

@@ -7,14 +7,13 @@
 
 import Foundation
 
-protocol AuthServiceProtocol {
+protocol AuthNetworkServiceProtocol {
     func login(email: String, password: String) async throws -> AuthResponse
     func register(email: String, password: String) async throws -> AuthResponse
 }
 
-class AuthService: AuthServiceProtocol {
+class AuthNetworkService: AuthNetworkServiceProtocol {
     func login(email: String, password: String) async throws -> AuthResponse {
-        print("3")
         guard let url = URL(string: "https://api.example.com/login") else {
             throw NSError(domain: "Auth", code: 400, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])
         }

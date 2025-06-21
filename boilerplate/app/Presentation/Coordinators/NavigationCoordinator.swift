@@ -21,6 +21,7 @@ class NavigationCoordinator: ObservableObject {
     /// Вернуться назад
     func goBack() {
         path.removeLast()
+
     }
     
     /// Перейти на главный экран

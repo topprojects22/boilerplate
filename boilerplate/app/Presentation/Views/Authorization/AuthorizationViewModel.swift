@@ -1,29 +1,34 @@
 import Foundation
 
+@MainActor
 class AuthorizationViewModel: ObservableObject {
+    /* Authorization STATE */
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var isRegistering: Bool = false
     @Published var isLoading: Bool = false
     @Published var error: String?
+    /* !Authorization STATE */
     
-    private let authUseCase: AuthUseCase
+    /* Authorization DI */
+    private let authRepository: AuthRepository
     
-    init(authUseCase: AuthUseCase) {
-        self.authUseCase = authUseCase
+    init(authRepository: AuthRepository) {
+        self.authRepository = authRepository
     }
     
     static func make(diContainer: DIContainerProtocol) -> AuthorizationViewModel {
-        AuthorizationViewModel(authUseCase: diContainer.makeAuthUseCase())
+        AuthorizationViewModel(authRepository: diContainer.makeAuthRepository())
     }
+    /* !Authorization DI */
     
+    /* Authorization ACTIONS */
     func login() {
         isLoading = true
         error = nil
         Task {
             do {
-                print("1")
-                var response = try await authUseCase.login(email: email, password: password)
+                var response = try await authRepository.login(email: email, password: password)
                 await MainActor.run {
                     SessionManager.shared.saveSession(token: response.token, user: response.user)
                     // Navigate or update UI
@@ -44,7 +49,7 @@ class AuthorizationViewModel: ObservableObject {
         error = nil
         Task {
             do {
-                try await authUseCase.register(email: email, password: password)
+                try await authRepository.register(email: email, password: password)
                 // Handle successful registration (e.g., update user state, navigate)
             } catch {
                 await MainActor.run {
@@ -56,4 +61,5 @@ class AuthorizationViewModel: ObservableObject {
             }
         }
     }
-} 
+    /* !Authorization ACTIONS */
+}

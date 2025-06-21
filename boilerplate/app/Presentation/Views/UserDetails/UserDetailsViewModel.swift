@@ -10,31 +10,40 @@ import Foundation
 // MARK: - Presentation/ViewModels/UserDetailsViewModel.swift
 @MainActor
 class UserDetailsViewModel: ObservableObject {
+    
+    /* UserDetails STATE */
     @Published var user: User
     @Published var isLoading = false
     @Published var error: IdentifiableError?
+    /* !UserDetails STATE */
     
-    private let toggleFavoriteUseCase: ToggleFavoriteUserUseCase
+    /* UserDetails DI */
+    private let userRepository: UserRepository
     
-    init(user: User, toggleFavoriteUseCase: ToggleFavoriteUserUseCase) {
+    init(
+        user: User,
+        userRepository: UserRepository,
+    ) {
         self.user = user
-        self.toggleFavoriteUseCase = toggleFavoriteUseCase
+        self.userRepository = userRepository
     }
     
     static func make(user: User, diContainer: DIContainerProtocol) -> UserDetailsViewModel {
-        let useCase = ToggleFavoriteUserUseCase(repository: diContainer.makeUserRepository())
-        return UserDetailsViewModel(user: user, toggleFavoriteUseCase: useCase)
+        UserDetailsViewModel(user: user, userRepository: diContainer.makeUserRepository())
     }
+    /* !UserDetails DI */
     
+    /* UserDetails ACTIONS */
     func toggleFavorite() {
         Task {
             isLoading = true
             do {
-                user = try await toggleFavoriteUseCase.execute(user: user)
+                user = try await userRepository.toggleFavorite(user: user)
             } catch {
                 self.error = IdentifiableError(error: error)
             }
             isLoading = false
         }
     }
+    /* !UserDetails ACTIONS */
 }

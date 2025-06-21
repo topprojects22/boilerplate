@@ -3,6 +3,7 @@ import SwiftUI
 struct ProfileView: View {
     @Environment(\.diContainer) private var diContainer
     @StateObject private var viewModel: ProfileViewModel
+    
     @State private var selectedTab = 0
     @State private var isRefreshing = false
     
@@ -29,10 +30,10 @@ struct ProfileView: View {
                             )
                         
                         VStack(spacing: 4) {
-                            Text(viewModel.userName)
+                            Text(String(viewModel.profile?.id ?? 0))
                                 .font(.title2)
                                 .fontWeight(.bold)
-                            Text(viewModel.email)
+                            Text(viewModel.profile?.name ?? "")
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                         }
@@ -119,7 +120,7 @@ struct ProfileView: View {
                 }
                 
                 if let error = viewModel.error {
-                    Text(error)
+                    Text(error.error.localizedDescription)
                         .foregroundColor(.red)
                         .font(.footnote)
                         .padding()
@@ -130,11 +131,11 @@ struct ProfileView: View {
         .background(Color(.systemGray6).edgesIgnoringSafeArea(.all))
         .refreshable {
             isRefreshing = true
-            await viewModel.loadUserInfo()
+            await viewModel.loadProfileInfo()
             isRefreshing = false
         }
         .onAppear {
-            viewModel.loadUserInfo()
+            viewModel.loadProfileInfo()
         }
     }
 }

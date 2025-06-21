@@ -33,9 +33,9 @@
 		0A9AD4192DC5466D00E6812A /* UserModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserModel.xcdatamodel; sourceTree = "<group>"; };
 		0A9AD4592DC5498500E6812A /* UserEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		0A9AD45A2DC5498500E6812A /* UserEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		0AEA12A22DC4F3EE00471F4A /* boilerplate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = boilerplate.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0AEA12B22DC4F3EF00471F4A /* boilerplateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = boilerplateTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0AEA12BC2DC4F3EF00471F4A /* boilerplateUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = boilerplateUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0AEA12A22DC4F3EE00471F4A /* ar3dprofile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ar3dprofile.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0AEA12B22DC4F3EF00471F4A /* ar3dprofileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ar3dprofileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0AEA12BC2DC4F3EF00471F4A /* ar3dprofileUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ar3dprofileUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -85,9 +85,9 @@
 		0AEA12A32DC4F3EE00471F4A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0AEA12A22DC4F3EE00471F4A /* boilerplate.app */,
-				0AEA12B22DC4F3EF00471F4A /* boilerplateTests.xctest */,
-				0AEA12BC2DC4F3EF00471F4A /* boilerplateUITests.xctest */,
+				0AEA12A22DC4F3EE00471F4A /* ar3dprofile.app */,
+				0AEA12B22DC4F3EF00471F4A /* ar3dprofileTests.xctest */,
+				0AEA12BC2DC4F3EF00471F4A /* ar3dprofileUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,9 +95,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0AEA12A12DC4F3EE00471F4A /* boilerplate */ = {
+		0AEA12A12DC4F3EE00471F4A /* ar3dprofile */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0AEA12C62DC4F3EF00471F4A /* Build configuration list for PBXNativeTarget "boilerplate" */;
+			buildConfigurationList = 0AEA12C62DC4F3EF00471F4A /* Build configuration list for PBXNativeTarget "ar3dprofile" */;
 			buildPhases = (
 				0AEA129E2DC4F3EE00471F4A /* Sources */,
 				0AEA129F2DC4F3EE00471F4A /* Frameworks */,
@@ -110,16 +110,16 @@
 			fileSystemSynchronizedGroups = (
 				0AEA12A42DC4F3EE00471F4A /* boilerplate */,
 			);
-			name = boilerplate;
+			name = ar3dprofile;
 			packageProductDependencies = (
 			);
 			productName = boilerplate;
-			productReference = 0AEA12A22DC4F3EE00471F4A /* boilerplate.app */;
+			productReference = 0AEA12A22DC4F3EE00471F4A /* ar3dprofile.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0AEA12B12DC4F3EF00471F4A /* boilerplateTests */ = {
+		0AEA12B12DC4F3EF00471F4A /* ar3dprofileTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0AEA12C92DC4F3EF00471F4A /* Build configuration list for PBXNativeTarget "boilerplateTests" */;
+			buildConfigurationList = 0AEA12C92DC4F3EF00471F4A /* Build configuration list for PBXNativeTarget "ar3dprofileTests" */;
 			buildPhases = (
 				0AEA12AE2DC4F3EF00471F4A /* Sources */,
 				0AEA12AF2DC4F3EF00471F4A /* Frameworks */,
@@ -130,16 +130,16 @@
 			dependencies = (
 				0AEA12B42DC4F3EF00471F4A /* PBXTargetDependency */,
 			);
-			name = boilerplateTests;
+			name = ar3dprofileTests;
 			packageProductDependencies = (
 			);
 			productName = boilerplateTests;
-			productReference = 0AEA12B22DC4F3EF00471F4A /* boilerplateTests.xctest */;
+			productReference = 0AEA12B22DC4F3EF00471F4A /* ar3dprofileTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		0AEA12BB2DC4F3EF00471F4A /* boilerplateUITests */ = {
+		0AEA12BB2DC4F3EF00471F4A /* ar3dprofileUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0AEA12CC2DC4F3EF00471F4A /* Build configuration list for PBXNativeTarget "boilerplateUITests" */;
+			buildConfigurationList = 0AEA12CC2DC4F3EF00471F4A /* Build configuration list for PBXNativeTarget "ar3dprofileUITests" */;
 			buildPhases = (
 				0AEA12B82DC4F3EF00471F4A /* Sources */,
 				0AEA12B92DC4F3EF00471F4A /* Frameworks */,
@@ -150,11 +150,11 @@
 			dependencies = (
 				0AEA12BE2DC4F3EF00471F4A /* PBXTargetDependency */,
 			);
-			name = boilerplateUITests;
+			name = ar3dprofileUITests;
 			packageProductDependencies = (
 			);
 			productName = boilerplateUITests;
-			productReference = 0AEA12BC2DC4F3EF00471F4A /* boilerplateUITests.xctest */;
+			productReference = 0AEA12BC2DC4F3EF00471F4A /* ar3dprofileUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -180,7 +180,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0AEA129D2DC4F3EE00471F4A /* Build configuration list for PBXProject "boilerplate" */;
+			buildConfigurationList = 0AEA129D2DC4F3EE00471F4A /* Build configuration list for PBXProject "ar3dprofile" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -194,9 +194,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0AEA12A12DC4F3EE00471F4A /* boilerplate */,
-				0AEA12B12DC4F3EF00471F4A /* boilerplateTests */,
-				0AEA12BB2DC4F3EF00471F4A /* boilerplateUITests */,
+				0AEA12A12DC4F3EE00471F4A /* ar3dprofile */,
+				0AEA12B12DC4F3EF00471F4A /* ar3dprofileTests */,
+				0AEA12BB2DC4F3EF00471F4A /* ar3dprofileUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -255,12 +255,12 @@
 /* Begin PBXTargetDependency section */
 		0AEA12B42DC4F3EF00471F4A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0AEA12A12DC4F3EE00471F4A /* boilerplate */;
+			target = 0AEA12A12DC4F3EE00471F4A /* ar3dprofile */;
 			targetProxy = 0AEA12B32DC4F3EF00471F4A /* PBXContainerItemProxy */;
 		};
 		0AEA12BE2DC4F3EF00471F4A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0AEA12A12DC4F3EE00471F4A /* boilerplate */;
+			target = 0AEA12A12DC4F3EE00471F4A /* ar3dprofile */;
 			targetProxy = 0AEA12BD2DC4F3EF00471F4A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -455,7 +455,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/boilerplate.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/boilerplate";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ar3dprofile.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ar3dprofile";
 			};
 			name = Debug;
 		};
@@ -473,7 +473,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/boilerplate.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/boilerplate";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ar3dprofile.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ar3dprofile";
 			};
 			name = Release;
 		};
@@ -512,7 +512,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0AEA129D2DC4F3EE00471F4A /* Build configuration list for PBXProject "boilerplate" */ = {
+		0AEA129D2DC4F3EE00471F4A /* Build configuration list for PBXProject "ar3dprofile" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0AEA12C42DC4F3EF00471F4A /* Debug */,
@@ -521,7 +521,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0AEA12C62DC4F3EF00471F4A /* Build configuration list for PBXNativeTarget "boilerplate" */ = {
+		0AEA12C62DC4F3EF00471F4A /* Build configuration list for PBXNativeTarget "ar3dprofile" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0AEA12C72DC4F3EF00471F4A /* Debug */,
@@ -530,7 +530,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0AEA12C92DC4F3EF00471F4A /* Build configuration list for PBXNativeTarget "boilerplateTests" */ = {
+		0AEA12C92DC4F3EF00471F4A /* Build configuration list for PBXNativeTarget "ar3dprofileTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0AEA12CA2DC4F3EF00471F4A /* Debug */,
@@ -539,7 +539,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0AEA12CC2DC4F3EF00471F4A /* Build configuration list for PBXNativeTarget "boilerplateUITests" */ = {
+		0AEA12CC2DC4F3EF00471F4A /* Build configuration list for PBXNativeTarget "ar3dprofileUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0AEA12CD2DC4F3EF00471F4A /* Debug */,

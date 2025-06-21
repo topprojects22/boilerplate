@@ -10,7 +10,8 @@ import SwiftUI
 
 protocol DIContainerProtocol {
     func makeUserRepository() -> UserRepository
-    func makeAuthUseCase() -> AuthUseCase
+    func makeProfileRepository() -> ProfileRepository
+    func makeAuthRepository() -> AuthRepository
     // Add more as needed
 }
 
@@ -30,11 +31,18 @@ class DIContainer: DIContainerProtocol {
     func makeUserRepository() -> UserRepository {
         let networkService = UserNetworkService()
         let localStore = UserLocalStore(container: persistentContainer)
-        return UserRepositoryImpl(networkService: networkService, localStore: localStore)
+        return UserRepository(networkService: networkService, localStore: localStore)
     }
     
-    func makeAuthUseCase() -> AuthUseCase {
-        AuthUseCase(authRepository: AuthRepositoryImpl(authService: AuthService()))
+    func makeProfileRepository() -> ProfileRepository {
+        let networkService = ProfileNetworkService()
+        let localStore = UserLocalStore(container: persistentContainer)
+        return ProfileRepository(networkService: networkService, localStore: localStore)
+    }
+    
+    func makeAuthRepository() -> AuthRepository {
+        let networkService = AuthNetworkService()
+        return AuthRepository(networkService: networkService)
     }
 }
 
@@ -51,9 +59,3 @@ extension EnvironmentValues {
 }
 
 // MARK: - Mock for Previews/Tests
-
-class UserRepositoryMock: UserRepository {
-    func fetchUsers() async throws -> [User] {
-        return [User(id: 1, name: "Mock User", email: "mock@example.com", isFavorite: false)]
-    }
-}

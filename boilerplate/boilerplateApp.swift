@@ -33,9 +33,9 @@ struct MyAppApp: App {
 
 class AppState: ObservableObject {
     enum Screen {
-        case splash, auth, paywall, mainTab
+        case splash, auth, paywall, mainTab, profile
     }
-    @Published var currentScreen: Screen = .splash
+    @Published var currentScreen: Screen = .profile
 }
 
 struct RootView: View {
@@ -56,7 +56,10 @@ struct RootView: View {
                 PaymentWallView()
             case .mainTab:
                 MainTabView()
+            case .profile:
+                ProfileView()
             }
+            
         }
     }
 }

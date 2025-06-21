@@ -18,13 +18,18 @@ struct UserListView: View {
     @State private var isRefreshing = false
     @State private var showingAddUser = false
     
+//    init() {
+//        let fetchUsersUseCase = FetchUsersUseCase(repository: DIContainer.shared.makeUserRepository())
+//        let navigationCoordinator = NavigationCoordinator()
+//        _viewModel = StateObject(wrappedValue: UserListViewModel(
+//            fetchUsersUseCase: fetchUsersUseCase,
+//            navigationCoordinator: navigationCoordinator
+//        ))
+//    }
+    
     init() {
-        let fetchUsersUseCase = FetchUsersUseCase(repository: DIContainer.shared.makeUserRepository())
         let navigationCoordinator = NavigationCoordinator()
-        _viewModel = StateObject(wrappedValue: UserListViewModel(
-            fetchUsersUseCase: fetchUsersUseCase,
-            navigationCoordinator: navigationCoordinator
-        ))
+        _viewModel = StateObject(wrappedValue: UserListViewModel.make(navigationCoordinator: navigationCoordinator, diContainer: DIContainer.shared))
     }
     
     var filteredUsers: [User] {

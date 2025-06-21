@@ -12,8 +12,7 @@ struct UserDetailsView: View {
     @StateObject private var viewModel: UserDetailsViewModel
     
     init(user: User) {
-        let toggleFavoriteUseCase = ToggleFavoriteUserUseCase(repository: DIContainer.shared.makeUserRepository())
-        _viewModel = StateObject(wrappedValue: UserDetailsViewModel(user: user, toggleFavoriteUseCase: toggleFavoriteUseCase))
+        _viewModel = StateObject(wrappedValue: UserDetailsViewModel.make(user: user, diContainer: DIContainer.shared))
     }
     
     var body: some View {
