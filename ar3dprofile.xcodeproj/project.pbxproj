@@ -10,6 +10,7 @@
 		0A9AD41A2DC5466D00E6812A /* UserModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0A9AD4182DC5466D00E6812A /* UserModel.xcdatamodeld */; };
 		0A9AD45B2DC5498500E6812A /* UserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9AD4592DC5498500E6812A /* UserEntity+CoreDataClass.swift */; };
 		0A9AD45C2DC5498500E6812A /* UserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9AD45A2DC5498500E6812A /* UserEntity+CoreDataProperties.swift */; };
+		0ACE817C2E085B2500423921 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 0ACE817B2E085B2500423921 /* KeychainAccess */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0ACE817C2E085B2500423921 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +114,7 @@
 			);
 			name = ar3dprofile;
 			packageProductDependencies = (
+				0ACE817B2E085B2500423921 /* KeychainAccess */,
 			);
 			productName = boilerplate;
 			productReference = 0AEA12A22DC4F3EE00471F4A /* ar3dprofile.app */;
@@ -189,6 +192,9 @@
 			);
 			mainGroup = 0AEA12992DC4F3EE00471F4A;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				0ACE817A2E085B2500423921 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0AEA12A32DC4F3EE00471F4A /* Products */;
 			projectDirPath = "";
@@ -549,6 +555,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0ACE817A2E085B2500423921 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0ACE817B2E085B2500423921 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0ACE817A2E085B2500423921 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		0A9AD4182DC5466D00E6812A /* UserModel.xcdatamodeld */ = {

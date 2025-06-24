@@ -42,7 +42,8 @@ class DIContainer: DIContainerProtocol {
     
     func makeAuthRepository() -> AuthRepository {
         let networkService = AuthNetworkService()
-        return AuthRepository(networkService: networkService)
+        let keychainService = KeychainService()
+        return AuthRepository(networkService: networkService, keychainService: keychainService)
     }
 }
 

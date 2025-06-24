@@ -106,7 +106,11 @@ struct ProfileView: View {
                         Divider()
                         ProfileActionRow(icon: "info.circle.fill", title: "About", subtitle: "Version 1.0.0")
                         Divider()
-                        ProfileActionRow(icon: "arrow.right.square.fill", title: "Logout", subtitle: "Sign out of your account", isDestructive: true)
+                        ProfileActionRow(icon: "arrow.right.square.fill", title: "Logout", subtitle: "Sign out of your account", isDestructive: true).onTapGesture {
+                            Task {
+                                try await viewModel.logout()
+                            }
+                        }
                     }
                     .background(Color(.systemBackground))
                     .cornerRadius(16)

@@ -35,11 +35,14 @@ class AppState: ObservableObject {
     enum Screen {
         case splash, auth, paywall, mainTab, profile
     }
-    @Published var currentScreen: Screen = .profile
+    @Published var currentScreen: Screen = .splash
 }
 
 struct RootView: View {
     @EnvironmentObject var appState: AppState
+    
+    let isAuthenticated = UserDefaults.standard.bool(forKey: "isAuthenticated")
+    
     var body: some View {
         ZStack {
             switch appState.currentScreen {
@@ -47,7 +50,11 @@ struct RootView: View {
                 SplashView()
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                            appState.currentScreen = .auth
+                            if (isAuthenticated) {
+                                appState.currentScreen = .mainTab
+                            } else {
+                                appState.currentScreen = .auth
+                            }
                         }
                     }
             case .auth:
