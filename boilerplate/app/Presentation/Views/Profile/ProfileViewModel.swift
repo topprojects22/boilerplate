@@ -12,16 +12,26 @@ class ProfileViewModel: ObservableObject {
     /* !Profile STATE */
     
     /* Profile DI */
+    private var coordinator: NavigationCoordinator
     private var profileRepository: ProfileRepository
     private let authRepository: AuthRepository
     
-    init(profileRepository: ProfileRepository, authRepository: AuthRepository) {
+    init(
+        coordinator: NavigationCoordinator,
+        profileRepository: ProfileRepository,
+        authRepository: AuthRepository
+    ) {
+        self.coordinator = coordinator
         self.profileRepository = profileRepository
         self.authRepository = authRepository
     }
     
     static func make(diContainer: DIContainerProtocol) -> ProfileViewModel {
-        ProfileViewModel(profileRepository: diContainer.makeProfileRepository(), authRepository: diContainer.makeAuthRepository())
+        ProfileViewModel(
+            coordinator: diContainer.makeCoordinator(),
+            profileRepository: diContainer.makeProfileRepository(),
+            authRepository: diContainer.makeAuthRepository()
+        )
     }
     /* !Profile DI */
     
@@ -40,6 +50,7 @@ class ProfileViewModel: ObservableObject {
     
     func logout() async throws {
         try await authRepository.logout()
+        coordinator.goTo(.auth)
     }
     /* !Profile ACTIONS */
 }

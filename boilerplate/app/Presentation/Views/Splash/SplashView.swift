@@ -2,8 +2,14 @@ import SwiftUI
 
 struct SplashView: View {
     @Environment(\.diContainer) private var diContainer
+    @StateObject private var viewModel: SplashViewModel
+    
     @State private var isAnimating = false
     @State private var showLoadingText = false
+    
+    init() {
+        _viewModel = StateObject(wrappedValue: SplashViewModel.make(diContainer: DIContainer.shared))
+    }
     
     var body: some View {
         ZStack {
@@ -91,6 +97,9 @@ struct SplashView: View {
         .onAppear {
             isAnimating = true
             showLoadingText = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                viewModel.setNextScreen()
+            }
         }
     }
 }

@@ -20,9 +20,11 @@ class AuthorizationViewModel: ObservableObject {
     /* !Authorization STATE */
     
     /* Authorization DI */
+    private let coordinator: NavigationCoordinator
     private let authRepository: AuthRepository
     
-    init(authRepository: AuthRepository) {
+    init(coordinator: NavigationCoordinator, authRepository: AuthRepository) {
+        self.coordinator = coordinator
         self.authRepository = authRepository
         
         Task {
@@ -31,12 +33,14 @@ class AuthorizationViewModel: ObservableObject {
     }
     
     static func make(diContainer: DIContainerProtocol) -> AuthorizationViewModel {
-        AuthorizationViewModel(authRepository: diContainer.makeAuthRepository())
+        AuthorizationViewModel(
+            coordinator: diContainer.makeCoordinator(),
+            authRepository: diContainer.makeAuthRepository()
+        )
     }
     /* !Authorization DI */
     
     /* Authorization ACTIONS */
-    
     func restoreSession() async {
         do {
             if let tokens = try await authRepository.keychainLoad() {
@@ -61,6 +65,15 @@ class AuthorizationViewModel: ObservableObject {
     func login(email: String, password: String) async throws {
         let tokens = try await authRepository.login(email: email, password: password)
         update(tokens: tokens)
+        
+        coordinator.goTo(.mainTab)
+    }
+    
+    func register(email: String, password: String) async throws {
+        let tokens = try await authRepository.register(email: email, password: password)
+        update(tokens: tokens)
+        
+        coordinator.goTo(.mainTab)
     }
 
     func logout() async throws {
@@ -68,6 +81,8 @@ class AuthorizationViewModel: ObservableObject {
 
         accessToken = nil
         refreshToken = nil
+
+        coordinator.goTo(.auth)
     }
 
     func handleUnauthorized(completion: @escaping () -> Void) async {
@@ -116,6 +131,5 @@ class AuthorizationViewModel: ObservableObject {
     private func setIsAuthenticated(isAuthenticated: Bool) {
         authRepository.setIsAuthenticated(isAuthenticated: isAuthenticated)
     }
-    
     /* !Authorization ACTIONS */
 }

@@ -31,42 +31,37 @@ struct MyAppApp: App {
     }
 }
 
+enum Screen {
+    case splash, auth, paywall, mainTab, profile
+}
+
 class AppState: ObservableObject {
-    enum Screen {
-        case splash, auth, paywall, mainTab, profile
-    }
     @Published var currentScreen: Screen = .splash
 }
 
 struct RootView: View {
     @EnvironmentObject var appState: AppState
-    
-    let isAuthenticated = UserDefaults.standard.bool(forKey: "isAuthenticated")
+    @StateObject private var coordinator = DIContainer.shared.makeCoordinator()
     
     var body: some View {
-        ZStack {
-            switch appState.currentScreen {
-            case .splash:
-                SplashView()
-                    .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                            if (isAuthenticated) {
-                                appState.currentScreen = .mainTab
-                            } else {
-                                appState.currentScreen = .auth
-                            }
-                        }
-                    }
-            case .auth:
-                AuthorizationView()
-            case .paywall:
-                PaymentWallView()
-            case .mainTab:
-                MainTabView()
-            case .profile:
-                ProfileView()
-            }
+        NavigationStack(path: $coordinator.path) {
+            SplashView()
             
+            // Обработка маршрутов
+                .navigationDestination(for: Screen.self) { route in
+                    switch route {
+                    case .splash:
+                        SplashView()
+                    case .auth:
+                        AuthorizationView()
+                    case .paywall:
+                        PaymentWallView()
+                    case .mainTab:
+                        MainTabView()
+                    case .profile:
+                        ProfileView()
+                    }
+                }
         }
     }
 }

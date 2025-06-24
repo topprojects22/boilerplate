@@ -12,12 +12,14 @@ protocol DIContainerProtocol {
     func makeUserRepository() -> UserRepository
     func makeProfileRepository() -> ProfileRepository
     func makeAuthRepository() -> AuthRepository
+    func makeCoordinator() -> NavigationCoordinator
     // Add more as needed
 }
 
 class DIContainer: DIContainerProtocol {
     static let shared: DIContainerProtocol = DIContainer()
     private let persistentContainer: NSPersistentContainer
+    private let coordinator: NavigationCoordinator = NavigationCoordinator()
     
     private init() {
         persistentContainer = NSPersistentContainer(name: "UserModel")
@@ -44,6 +46,10 @@ class DIContainer: DIContainerProtocol {
         let networkService = AuthNetworkService()
         let keychainService = KeychainService()
         return AuthRepository(networkService: networkService, keychainService: keychainService)
+    }
+    
+    func makeCoordinator() -> NavigationCoordinator {
+        return coordinator
     }
 }
 

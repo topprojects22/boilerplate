@@ -28,4 +28,8 @@ class NavigationCoordinator: ObservableObject {
     func reset() {
         path = NavigationPath()
     }
+    
+    func goTo(_ route: Screen) {
+        path.append(route)
+    }
 }
